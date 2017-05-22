@@ -1,21 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import {Ingredient} from "../shared/ingredient";
+import {ShoppingListService} from "./shopping-list.service";
 
 @Component({
   selector: 'rb-shopping-list',
   templateUrl: './shopping-list.component.html'
 })
 export class ShoppingListComponent implements OnInit {
+  items: Ingredient[] = [];
+  selectedItem: Ingredient = null;
 
-  items: Ingredient[] = [
-    new Ingredient('arroz', 10),
-    new Ingredient('cebolla', 30),
-    new Ingredient('jitomate', 20)
-    ];
-
-  constructor() { }
+  constructor(private sls: ShoppingListService) { }
 
   ngOnInit() {
+    this.items = this.sls.getItems();
+  }
+
+  onSelectItem(item: Ingredient) {
+    this.selectedItem = item;
+  }
+
+  onCleared() {
+    this.selectedItem = null;
   }
 
 }
